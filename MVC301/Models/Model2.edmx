@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="autor">
+          <Key>
+            <PropertyRef Name="claveA" />
+          </Key>
+          <Property Name="claveA" Type="bigint" Nullable="false" />
+          <Property Name="nombreA" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="editorial">
+          <Key>
+            <PropertyRef Name="claveE" />
+          </Key>
+          <Property Name="claveE" Type="int" Nullable="false" />
+          <Property Name="nombree" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="libros">
+          <Key>
+            <PropertyRef Name="claveL" />
+          </Key>
+          <Property Name="claveL" Type="int" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="100" />
+          <Property Name="claveA" Type="bigint" />
+          <Property Name="claveE" Type="int" />
+        </EntityType>
+        <Association Name="fk_libros_autor">
+          <End Role="autor" Type="Self.autor" Multiplicity="0..1" />
+          <End Role="libros" Type="Self.libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="autor">
+              <PropertyRef Name="claveA" />
+            </Principal>
+            <Dependent Role="libros">
+              <PropertyRef Name="claveA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_libros_editorial">
+          <End Role="editorial" Type="Self.editorial" Multiplicity="0..1" />
+          <End Role="libros" Type="Self.libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="editorial">
+              <PropertyRef Name="claveE" />
+            </Principal>
+            <Dependent Role="libros">
+              <PropertyRef Name="claveE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database2ModelStoreContainer">
+          <EntitySet Name="autor" EntityType="Self.autor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="editorial" EntityType="Self.editorial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="libros" EntityType="Self.libros" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_libros_autor" Association="Self.fk_libros_autor">
+            <End Role="autor" EntitySet="autor" />
+            <End Role="libros" EntitySet="libros" />
+          </AssociationSet>
+          <AssociationSet Name="fk_libros_editorial" Association="Self.fk_libros_editorial">
+            <End Role="editorial" EntitySet="editorial" />
+            <End Role="libros" EntitySet="libros" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="autor">
+          <Key>
+            <PropertyRef Name="claveA" />
+          </Key>
+          <Property Name="claveA" Type="Int64" Nullable="false" />
+          <Property Name="nombreA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="libros" Relationship="Self.fk_libros_autor" FromRole="autor" ToRole="libros" />
+        </EntityType>
+        <EntityType Name="editorial">
+          <Key>
+            <PropertyRef Name="claveE" />
+          </Key>
+          <Property Name="claveE" Type="Int32" Nullable="false" />
+          <Property Name="nombree" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="libros" Relationship="Self.fk_libros_editorial" FromRole="editorial" ToRole="libros" />
+        </EntityType>
+        <EntityType Name="libros">
+          <Key>
+            <PropertyRef Name="claveL" />
+          </Key>
+          <Property Name="claveL" Type="Int32" Nullable="false" />
+          <Property Name="titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="claveA" Type="Int64" />
+          <Property Name="claveE" Type="Int32" />
+          <NavigationProperty Name="autor" Relationship="Self.fk_libros_autor" FromRole="libros" ToRole="autor" />
+          <NavigationProperty Name="editorial" Relationship="Self.fk_libros_editorial" FromRole="libros" ToRole="editorial" />
+        </EntityType>
+        <Association Name="fk_libros_autor">
+          <End Role="autor" Type="Self.autor" Multiplicity="0..1" />
+          <End Role="libros" Type="Self.libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="autor">
+              <PropertyRef Name="claveA" />
+            </Principal>
+            <Dependent Role="libros">
+              <PropertyRef Name="claveA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_libros_editorial">
+          <End Role="editorial" Type="Self.editorial" Multiplicity="0..1" />
+          <End Role="libros" Type="Self.libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="editorial">
+              <PropertyRef Name="claveE" />
+            </Principal>
+            <Dependent Role="libros">
+              <PropertyRef Name="claveE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="autor" EntityType="Self.autor" />
+          <EntitySet Name="editorial" EntityType="Self.editorial" />
+          <EntitySet Name="libros" EntityType="Self.libros" />
+          <AssociationSet Name="fk_libros_autor" Association="Self.fk_libros_autor">
+            <End Role="autor" EntitySet="autor" />
+            <End Role="libros" EntitySet="libros" />
+          </AssociationSet>
+          <AssociationSet Name="fk_libros_editorial" Association="Self.fk_libros_editorial">
+            <End Role="editorial" EntitySet="editorial" />
+            <End Role="libros" EntitySet="libros" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database2ModelStoreContainer" CdmEntityContainer="Database2Entities">
+          <EntitySetMapping Name="autor">
+            <EntityTypeMapping TypeName="Database2Model.autor">
+              <MappingFragment StoreEntitySet="autor">
+                <ScalarProperty Name="claveA" ColumnName="claveA" />
+                <ScalarProperty Name="nombreA" ColumnName="nombreA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="editorial">
+            <EntityTypeMapping TypeName="Database2Model.editorial">
+              <MappingFragment StoreEntitySet="editorial">
+                <ScalarProperty Name="claveE" ColumnName="claveE" />
+                <ScalarProperty Name="nombree" ColumnName="nombree" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="libros">
+            <EntityTypeMapping TypeName="Database2Model.libros">
+              <MappingFragment StoreEntitySet="libros">
+                <ScalarProperty Name="claveL" ColumnName="claveL" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="claveA" ColumnName="claveA" />
+                <ScalarProperty Name="claveE" ColumnName="claveE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,42 @@
+﻿@model MVC301.Models.libros
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>libros</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.autor.nombreA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.autor.nombreA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.editorial.nombree)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.editorial.nombree)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.claveL }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
